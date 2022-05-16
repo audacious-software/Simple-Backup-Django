@@ -18,19 +18,18 @@ class Command(BaseCommand):
                             type=str,
                             help='Backup file to decrypt')
 
-
-    @handle_lock
     def handle(self, *args, **options):
         key = base64.b64decode(settings.SIMPLE_BACKUP_KEY) # getpass.getpass('Enter secret backup key: ')
 
-        encrypted_file = options['file'][0]
+        for encrypted_file in  options['file']:
+            box = SecretBox(key)
 
-        box = SecretBox(key)
+            with open(encrypted_file, 'rb') as backup_file:
+                encrypted_content = backup_file.read()
 
-        with open(encrypted_file, 'rb') as backup_file:
-            encrypted_content = backup_file.read()
+                content = box.decrypt(encrypted_content)
 
-            content = box.decrypt(encrypted_content)
+                with open(encrypted_file.replace('.encrypted', ''), 'wb') as output:
+                    output.write(content)
 
-            with open(encrypted_file.replace('.encrypted', ''), 'wb') as output:
-                output.write(content)
+                    print('Decrypted %s' % encrypted_file.replace('.encrypted', ''))
