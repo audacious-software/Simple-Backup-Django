@@ -7,7 +7,6 @@ from nacl.secret import SecretBox
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from ...decorators import handle_lock
 
 class Command(BaseCommand):
     help = 'Loads content from incremental backups of data content.'
