@@ -12,9 +12,11 @@ import sys
 
 from io import BytesIO
 
+import boto3
 import dropbox
 import pytz
 
+from botocore.config import Config
 from nacl.secret import SecretBox
 
 from django.conf import settings
@@ -52,7 +54,7 @@ class Command(BaseCommand):
         folder_path_format = '%(start_date)s__%(end_date)s'
 
         try:
-            folder_path_format = settings.PDK_BACKUP_FOLDER_FORMAT
+            folder_path_format = settings.SIMPLE_BACKUP_FOLDER_FORMAT
         except AttributeError:
             pass
 
@@ -186,6 +188,37 @@ class Command(BaseCommand):
                                 sys.stdout.flush()
 
                                 client.files_upload(box.encrypt(backup_io.read()), dropbox_path)
+                    elif destination_url.scheme == 's3':
+                        aws_config = Config(
+                            region_name=settings.SIMPLE_BACKUP_AWS_REGION,
+                            retries={'max_attempts': 10, 'mode': 'standard'}
+                        )
+
+                        os.environ['AWS_ACCESS_KEY_ID'] = settings.SIMPLE_BACKUP_AWS_ACCESS_KEY_ID
+                        os.environ['AWS_SECRET_ACCESS_KEY'] = settings.SIMPLE_BACKUP_AWS_SECRET_ACCESS_KEY
+
+                        client = boto3.client('s3', config=aws_config)
+
+                        s3_bucket = destination_url.netloc
+
+                        for path in to_transmit:
+                            box = SecretBox(key)
+
+                            with open(path, 'rb') as backup_file:
+                                backup_io = BytesIO()
+                                backup_io.write(backup_file.read())
+                                backup_io.seek(0)
+
+                                filename = os.path.basename(path) + '.encrypted'
+
+                                final_folder = self.folder_for_options(options)
+
+                                final_filename = final_folder + '/' + filename
+
+                                print('Uploading to S3: ' + final_filename)
+                                sys.stdout.flush()
+
+                                client.put_object(Body=box.encrypt(backup_io.read()), Bucket=s3_bucket, Key=final_filename)
                     else:
                         print('Unknown destination: ' + destination)
 
