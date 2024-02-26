@@ -13,7 +13,7 @@ jobs:
   build-38:
     docker:
       - image: cimg/python:3.8
-      - image: cimg/postgres:9.6-postgis
+      - image: cimg/postgres:12.18-postgis
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
@@ -36,7 +36,7 @@ jobs:
             mv project simple_backup
             mkdir django
             cd django
-            django-admin.py startproject sm
+            django-admin startproject sm
             mv ../simple_backup sm
             cd sm
             cp simple_backup/circle_settings.py sm/settings.py
