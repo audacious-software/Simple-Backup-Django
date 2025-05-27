@@ -2,7 +2,11 @@
 
 import io
 import os
-import urllib
+
+try:
+    from urlparse import urlparse
+except ImportError:
+    from urllib.parse import urlparse
 
 import arrow
 
@@ -10,7 +14,6 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseUpload
 
 CACHED_FOLDER_IDS = {}
@@ -74,7 +77,7 @@ def fetch_service(scopes):
     return service
 
 def upload_content(destination, file_path, file_content, file_type):
-    url = urllib.parse.urlparse(destination)
+    url = urlparse(destination)
 
     scopes = [
         'https://www.googleapis.com/auth/drive',
@@ -128,7 +131,7 @@ def needs_update(service, root_id, name, size, updated):
     return False
 
 def create_sync_request(file_list, destination):
-    url = urllib.parse.urlparse(destination)
+    url = urlparse(destination)
 
     scopes = [
         'https://www.googleapis.com/auth/drive',
@@ -138,15 +141,10 @@ def create_sync_request(file_list, destination):
 
     requested_files = []
 
-    try:
-        for file_item in file_list:
-            if needs_update(service, url.netloc, file_item['name'], file_item['size'], file_item['updated']):
-                requested_files.append(file_item['name'])
-            else:
-                print('Skipping %s...' % file_item['name'])
-
-    except HttpError as error:
-        # TODO(developer) - Handle errors from drive API.
-        print(f'An error occurred: {error}')
+    for file_item in file_list:
+        if needs_update(service, url.netloc, file_item['name'], file_item['size'], file_item['updated']):
+            requested_files.append(file_item['name'])
+        else:
+            print('Skipping %s...' % file_item['name'])
 
     return requested_files

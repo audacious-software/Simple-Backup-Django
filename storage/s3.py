@@ -1,4 +1,7 @@
-import urllib
+try:
+    from urlparse import urlparse
+except ImportError:
+    from urllib.parse import urlparse
 
 import boto3
 
@@ -14,7 +17,7 @@ def s3_objects(paginator, bucket_name, prefix='/', delimiter='/', start_after=''
             yield content
 
 def list_files(source):
-    url = urllib.parse.urlparse(source)
+    url = urlparse(source)
 
     bucket_name = url.netloc
 
@@ -33,7 +36,7 @@ def list_files(source):
     return file_list
 
 def fetch_content(source, path):
-    url = urllib.parse.urlparse(source)
+    url = urlparse(source)
 
     bucket_name = url.netloc
 
