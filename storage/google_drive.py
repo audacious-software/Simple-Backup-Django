@@ -73,7 +73,6 @@ def fetch_service(scopes):
 
     return service
 
-
 def upload_content(destination, file_path, file_content, file_type):
     url = urllib.parse.urlparse(destination)
 
@@ -102,7 +101,6 @@ def upload_content(destination, file_path, file_content, file_type):
     identifier = file.get('id')
 
     return identifier
-
 
 def needs_update(service, root_id, name, size, updated):
     path_components = name.split('/')
