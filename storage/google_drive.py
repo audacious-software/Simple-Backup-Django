@@ -99,9 +99,9 @@ def upload_content(destination, file_path, file_content, file_type):
 
     media = MediaIoBaseUpload(io.BytesIO(file_content), mimetype=file_type, resumable=True)
 
-    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    new_file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-    identifier = file.get('id')
+    identifier = new_file.get('id')
 
     return identifier
 
