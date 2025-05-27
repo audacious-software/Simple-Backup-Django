@@ -22,7 +22,7 @@ def find_folder(service, parent_id, path, child_components):
     if path in CACHED_FOLDER_IDS:
         return CACHED_FOLDER_IDS[path]
 
-    if len(child_components) == 0:
+    if len(child_components) == 0: # pylint: disable=len-as-condition
         CACHED_FOLDER_IDS[path] = parent_id
 
         return parent_id
@@ -34,16 +34,16 @@ def find_folder(service, parent_id, path, child_components):
 
     items = results.get('files', [])
 
-    if len(items) == 0:
+    if len(items) == 0: # pylint: disable=len-as-condition
         folder_metadata = {
             'parents': [parent_id],
             'name': child_component,
             'mimeType': 'application/vnd.google-apps.folder',
         }
 
-        file = service.files().create(body=folder_metadata, fields="id").execute()
+        new_file = service.files().create(body=folder_metadata, fields="id").execute()
 
-        identifier = file.get('id')
+        identifier = new_file.get('id')
 
         CACHED_FOLDER_IDS[path] = identifier
 
@@ -115,7 +115,7 @@ def needs_update(service, root_id, name, size, updated):
 
     items = results.get('files', [])
 
-    if len(items) == 0:
+    if len(items) == 0: # pylint: disable=len-as-condition
         return True
 
     match = items[0]
