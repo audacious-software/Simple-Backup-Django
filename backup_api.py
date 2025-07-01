@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 import bz2
-import datetime
 import gc
 import io
 import logging
@@ -15,7 +14,7 @@ from django.utils.text import slugify
 
 logger = logging.getLogger(__name__) # pylint: disable=invalid-name
 
-def incremental_backup(parameters):
+def incremental_backup(parameters): # pylint: disable=unused-argument
     to_transmit = []
 
     # Dump full content of these models. No incremental backup here.
