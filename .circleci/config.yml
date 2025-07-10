@@ -43,7 +43,7 @@ jobs:
             django-admin startproject sm
             mv ../simple_backup sm
             cd sm
-            cp .circleci/circle_settings.py sm/settings.py
+            cp simple_backup/.circleci/circle_settings sm/settings.py
             python manage.py migrate
             python manage.py test
             cp simple_backup/.pylintrc .
@@ -88,7 +88,7 @@ jobs:
             django-admin startproject sm
             mv ../simple_backup sm
             cd sm
-            cp .circleci/circle_settings.py sm/settings.py
+            cp simple_backup/.circleci/circle_settings sm/settings.py
             python manage.py migrate
             python manage.py test
             cp simple_backup/.pylintrc .
@@ -133,7 +133,7 @@ jobs:
             django-admin startproject sm
             mv ../simple_backup sm
             cd sm
-            cp .circleci/circle_settings.py sm/settings.py
+            cp simple_backup/.circleci/circle_settings sm/settings.py
             python manage.py migrate
             python manage.py test
             cp simple_backup/.pylintrc .
@@ -178,7 +178,7 @@ jobs:
             django-admin startproject sm
             mv ../simple_backup sm
             cd sm
-            cp .circleci/circle_settings.py sm/settings.py
+            cp simple_backup/.circleci/circle_settings sm/settings.py
             python manage.py migrate
             python manage.py test
             cp simple_backup/.pylintrc .
@@ -223,7 +223,7 @@ jobs:
             django-admin startproject sm
             mv ../simple_backup sm
             cd sm
-            cp .circleci/circle_settings.py sm/settings.py
+            cp simple_backup/.circleci/circle_settings sm/settings.py
             python manage.py migrate
             python manage.py test
             cp simple_backup/.pylintrc .
@@ -268,7 +268,7 @@ jobs:
             django-admin.py startproject sm
             mv ../simple_backup sm
             cd sm
-            cp .circleci/circle_settings.py sm/settings.py
+            cp simple_backup/.circleci/circle_settings sm/settings.py
             python manage.py migrate
             python manage.py test
             cp simple_backup/.pylintrc .
