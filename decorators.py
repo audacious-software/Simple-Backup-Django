@@ -42,15 +42,6 @@ def handle_lock(handle):
         lock_prefix = slugify(lock_prefix)
 
         start_time = time.time()
-        verbosity = options.get('verbosity', 0)
-        if verbosity == 0:
-            level = logging.ERROR
-        elif verbosity == 1:
-            level = logging.WARN
-        elif verbosity == 2:
-            level = logging.INFO
-        else:
-            level = logging.DEBUG
 
         logging.debug("-" * 72)
 
