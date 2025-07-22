@@ -52,7 +52,6 @@ def handle_lock(handle):
         else:
             level = logging.DEBUG
 
-        logging.basicConfig(level=level, format="%(message)s")
         logging.debug("-" * 72)
 
         lock_name = self.__module__.split('.').pop()
