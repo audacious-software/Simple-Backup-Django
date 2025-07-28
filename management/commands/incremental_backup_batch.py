@@ -1,4 +1,4 @@
-# pylint: disable=no-member,line-too-long
+# pylint: disable=no-member,line-too-long,superfluous-parens
 
 from __future__ import print_function
 
