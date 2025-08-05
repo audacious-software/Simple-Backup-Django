@@ -26,7 +26,7 @@ google-auth-oauthlib==1.2.2; python_version >= '3.0'
 google-auth-oauthlib==0.4.1; python_version < '3.0'
 lockfile==0.12.2
 paramiko==2.12.0; python_version < '3.0'
-paramiko==3.5.1; python_version >= '3.0'
+paramiko==4.0.0; python_version >= '3.0'
 psycopg2-binary==2.8.6; python_version < '3.0'
 psycopg2-binary==2.9.8; python_version >= '3.0' and python_version < '3.7'
 psycopg2-binary==2.9.9; python_version == '3.7'
