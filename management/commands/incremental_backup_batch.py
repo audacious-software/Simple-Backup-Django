@@ -1,7 +1,5 @@
 # pylint: disable=no-member,line-too-long,superfluous-parens
 
-from builtins import str # pylint: disable=redefined-builtin
-
 import datetime
 
 import pytz
