@@ -1,8 +1,8 @@
 # pylint: disable=no-member,line-too-long
 
-from __future__ import print_function
-
 import base64
+
+import six
 
 from nacl.secret import SecretBox
 
@@ -33,4 +33,4 @@ class Command(BaseCommand):
                 with open(encrypted_file.replace('.encrypted', ''), 'wb') as output:
                     output.write(content)
 
-                    print('Decrypted %s' % encrypted_file.replace('.encrypted', ''))
+                    six.print_('Decrypted %s' % encrypted_file.replace('.encrypted', ''))

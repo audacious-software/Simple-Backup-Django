@@ -1,7 +1,5 @@
 # pylint: disable=no-member,line-too-long,superfluous-parens
 
-from __future__ import print_function
-
 from builtins import str # pylint: disable=redefined-builtin
 
 import datetime
@@ -68,8 +66,6 @@ class Command(BaseCommand):
 
             if options['filter_sensitive'] is not None and options['filter_sensitive'] is not False:
                 arguments.append('--filter-sensitive-data')
-
-            print(str(arguments))
 
             management.call_command('incremental_backup', *arguments)
 

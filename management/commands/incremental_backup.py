@@ -1,7 +1,5 @@
 # pylint: disable=no-member,line-too-long
 
-from __future__ import print_function
-
 from builtins import str # pylint: disable=redefined-builtin
 
 import base64
@@ -15,6 +13,7 @@ from io import BytesIO
 import boto3
 import dropbox
 import pytz
+import six
 
 from botocore.config import Config
 from nacl.secret import SecretBox
@@ -115,7 +114,7 @@ class Command(BaseCommand):
         try:
             key = base64.b64decode(settings.SIMPLE_BACKUP_KEY)
         except AttributeError:
-            print('Please define SIMPLE_BACKUP_KEY in the settings.')
+            six.print_('Please define SIMPLE_BACKUP_KEY in the settings.')
 
             sys.exit(1)
 
@@ -124,7 +123,7 @@ class Command(BaseCommand):
         try:
             destinations = settings.SIMPLE_BACKUP_DESTINATIONS
         except AttributeError:
-            print('Please define SIMPLE_BACKUP_DESTINATIONS in the settings.')
+            six.print_('Please define SIMPLE_BACKUP_DESTINATIONS in the settings.')
 
             sys.exit(1)
 
@@ -146,7 +145,7 @@ class Command(BaseCommand):
                             dest_path = os.path.join(dest_path, final_folder)
 
                         if os.path.exists(dest_path) is False:
-                            print('Creating folder for archive storage: ' + dest_path)
+                            six.print_('Creating folder for archive storage: ' + dest_path)
                             sys.stdout.flush()
                             os.makedirs(dest_path)
 
@@ -160,7 +159,7 @@ class Command(BaseCommand):
 
                                 encrypted_path = os.path.join(dest_path, filename)
 
-                                print('Writing to filesystem: ' + encrypted_path)
+                                six.print_('Writing to filesystem: ' + encrypted_path)
                                 sys.stdout.flush()
 
                                 with open(encrypted_path, 'wb') as encrypted_file:
@@ -184,7 +183,7 @@ class Command(BaseCommand):
 
                                 dropbox_path = os.path.join(destination_url.path, final_folder + '/' + filename)
 
-                                print('Uploading to Dropbox: ' + dropbox_path)
+                                six.print_('Uploading to Dropbox: ' + dropbox_path)
                                 sys.stdout.flush()
 
                                 client.files_upload(box.encrypt(backup_io.read()), dropbox_path)
@@ -215,12 +214,12 @@ class Command(BaseCommand):
 
                                 final_filename = final_folder + '/' + filename
 
-                                print('Uploading to S3: ' + final_filename)
+                                six.print_('Uploading to S3: ' + final_filename)
                                 sys.stdout.flush()
 
                                 client.put_object(Body=box.encrypt(backup_io.read()), Bucket=s3_bucket, Key=final_filename)
                     else:
-                        print('Unknown destination: ' + destination)
+                        six.print_('Unknown destination: ' + destination)
 
                 for path in to_transmit:
                     os.remove(path)
