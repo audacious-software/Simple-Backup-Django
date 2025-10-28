@@ -45,7 +45,7 @@ python-dotenv==0.18.0; python_version < '3.0'
 python-dotenv==0.20.0; python_version >= '3.0' and python_version < '3.7'
 python-dotenv==0.21.1; python_version == '3.7'
 python-dotenv==1.0.1; python_version == '3.8'
-python-dotenv==1.1.1; python_version >= '3.9'
+python-dotenv==1.2.1; python_version >= '3.9'
 pytz==2025.2
 six==1.17.0
 stone==3.3.1; python_version < '3.0'
