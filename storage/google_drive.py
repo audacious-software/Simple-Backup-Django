@@ -2,6 +2,7 @@
 
 import io
 import os
+import logging
 
 try:
     from urlparse import urlparse
@@ -15,6 +16,8 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
+
+logger = logging.getLogger(__name__) # pylint: disable=invalid-name
 
 CACHED_FOLDER_IDS = {}
 
@@ -145,6 +148,6 @@ def create_sync_request(file_list, destination):
         if needs_update(service, url.netloc, file_item['name'], file_item['size'], file_item['updated']):
             requested_files.append(file_item['name'])
         else:
-            print('Skipping %s...' % file_item['name'])
+            logger.info('Skipping %s...' % file_item['name'])
 
     return requested_files

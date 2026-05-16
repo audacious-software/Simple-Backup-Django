@@ -48,6 +48,8 @@ class Command(BaseCommand):
 
             sys.exit(1)
 
+        source_list.sort(key=lambda item: item.get('updated', None), reverse=True)
+
         try:
             request_list = destination_module.create_sync_request(source_list, destination)
         except: # pylint: disable=bare-except
